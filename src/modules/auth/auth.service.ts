@@ -9,10 +9,10 @@ export class AuthService {
     private userService: UsersService,
     private hashService: HashService,
     private jwtService: JwtService,
-  ) {}
+  ) { }
 
-  async validateUser(email: string, password: string): Promise<any> {
-    const user = await this.userService.getUserByEmail(email);
+  async validateUser(username: string, password: string): Promise<any> {
+    const user = await this.userService.getUserByUsername(username);
 
     if (
       user &&
@@ -27,7 +27,7 @@ export class AuthService {
 
   async login(user: any) {
     const payload = {
-      email: user.email,
+      username: user.username,
       sub: user.id,
     };
 

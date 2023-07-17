@@ -14,10 +14,10 @@ export class UserRepository {
     @InjectModel(User.name)
     private readonly userModel: Model<User>,
     private hashService: HashService,
-  ) {}
+  ) { }
 
   async createUser(createUserDto: CreateUserDto, session: ClientSession) {
-    let user = await this.getUserByEmail(createUserDto.email);
+    let user = await this.getUserByUsername(createUserDto.username);
 
     if (user) {
       throw new ConflictException('User Already Exists.');
@@ -25,7 +25,7 @@ export class UserRepository {
 
     user = new this.userModel({
       name: createUserDto.name,
-      email: createUserDto.email,
+      username: createUserDto.username,
       password: await this.hashService.hashPassword(createUserDto.password),
     });
 
@@ -58,12 +58,12 @@ export class UserRepository {
     return user;
   }
 
-  async getUserByEmail(email: string) {
+  async getUserByUsername(username: string) {
     let user: any;
 
     try {
       user = await this.userModel
-        .findOne({ email }, 'name email password')
+        .findOne({ username }, 'name username password')
         .exec();
     } catch (error) {
       throw new InternalServerErrorException(error);

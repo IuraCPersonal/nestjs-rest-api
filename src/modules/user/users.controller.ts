@@ -14,7 +14,7 @@ import { InjectConnection } from '@nestjs/mongoose';
 import { Connection, Schema as MongooseSchema } from 'mongoose';
 import { CreateUserDto } from './dto/createUser.dto';
 
-@Controller('users')
+@Controller('auth')
 export class UsersController {
   constructor(
     @InjectConnection()
@@ -22,7 +22,7 @@ export class UsersController {
     private userService: UsersService,
   ) { }
 
-  @Post('/createUser')
+  @Post('/signup')
   async createUser(@Body() createUserDto: CreateUserDto, @Res() res: Response) {
     const session = await this.mongoConnection.startSession();
     session.startTransaction();

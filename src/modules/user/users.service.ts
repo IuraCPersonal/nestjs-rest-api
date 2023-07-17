@@ -5,15 +5,15 @@ import { UserRepository } from 'src/repositories/user.repository';
 
 @Injectable()
 export class UsersService {
-  constructor(private readonly userRepository: UserRepository) {}
+  constructor(private readonly userRepository: UserRepository) { }
 
   async createUser(createUserDto: CreateUserDto, session: ClientSession) {
     const createdUser = this.userRepository.createUser(createUserDto, session);
     return createdUser;
   }
 
-  async getUserByEmail(email: string) {
-    return await this.userRepository.getUserByEmail(email);
+  async getUserByUsername(username: string) {
+    return await this.userRepository.getUserByUsername(username);
   }
 
   async getUserById(id: MongooseSchema.Types.ObjectId) {
