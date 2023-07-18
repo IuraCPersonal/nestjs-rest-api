@@ -15,4 +15,4 @@ import { HashService } from './hash.service';
   providers: [UsersService, HashService, UserRepository],
   exports: [UsersService, HashService, UserRepository],
 })
-export class UsersModule {}
+export class UsersModule { }
