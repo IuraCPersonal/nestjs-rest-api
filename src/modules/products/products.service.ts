@@ -1,11 +1,11 @@
 import { Injectable } from '@nestjs/common';
 import { ProductsRepository } from 'src/repositories/products.repository';
 import { CreateProductDto } from './dto/createProduct.dto';
-import { ClientSession } from 'mongoose';
+import { ClientSession, Schema as MongooseSchema } from 'mongoose';
 
 @Injectable()
 export class ProductsService {
-  constructor(private readonly productsRepository: ProductsRepository) { }
+  constructor(private readonly productsRepository: ProductsRepository) {}
 
   async createProduct(
     createProductDto: CreateProductDto,
@@ -20,5 +20,9 @@ export class ProductsService {
 
   async getProducts() {
     return this.productsRepository.getProducts();
+  }
+
+  async getProductById(id: MongooseSchema.Types.ObjectId) {
+    return await this.productsRepository.getProductById(id);
   }
 }

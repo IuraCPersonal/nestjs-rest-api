@@ -4,11 +4,12 @@ import {
   Controller,
   Get,
   HttpStatus,
+  Param,
   Post,
   Res,
 } from '@nestjs/common';
 import { InjectConnection } from '@nestjs/mongoose';
-import { Connection } from 'mongoose';
+import { Connection, Schema as MongooseSchema } from 'mongoose';
 import { Response } from 'express';
 import { ProductsService } from './products.service';
 import { CreateProductDto } from './dto/createProduct.dto';
@@ -49,5 +50,14 @@ export class ProductsController {
     } finally {
       session.endSession();
     }
+  }
+
+  @Get('/getProductById/:id')
+  async getProductById(
+    @Param('id') id: MongooseSchema.Types.ObjectId,
+    @Res() res: Response,
+  ) {
+    const product: any = await this.productsService.getProductById(id);
+    return res.status(HttpStatus.OK).send(product);
   }
 }

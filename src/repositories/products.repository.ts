@@ -1,11 +1,23 @@
 import {
   ConflictException,
   InternalServerErrorException,
+  NotFoundException,
 } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { ClientSession, Model } from 'mongoose';
+import { ClientSession, Model, Schema as MongooseSchema } from 'mongoose';
 import { CreateProductDto } from 'src/modules/products/dto/createProduct.dto';
 import { Product } from 'src/schemas/product.schema';
+
+export interface IProduct {
+  name: string;
+  price: number;
+  image: string;
+  colors: Array<string>;
+  company: string;
+  description: string;
+  category: string;
+  shipping: boolean;
+}
 
 export class ProductsRepository {
   constructor(
@@ -42,7 +54,7 @@ export class ProductsRepository {
   }
 
   async getProducts() {
-    let products: Array<any>;
+    let products: Array<IProduct>;
 
     try {
       products = await this.productModel.find({}).exec();
@@ -51,5 +63,21 @@ export class ProductsRepository {
     }
 
     return products;
+  }
+
+  async getProductById(id: MongooseSchema.Types.ObjectId) {
+    let product: any;
+
+    try {
+      product = await this.productModel.findById({ _id: id });
+    } catch (error) {
+      throw new InternalServerErrorException(error);
+    }
+
+    if (!product) {
+      throw new NotFoundException('Product Not Found.');
+    }
+
+    return product;
   }
 }

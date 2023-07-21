@@ -1,5 +1,5 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Document } from 'mongoose';
+import { Document, Schema as SchemaType } from 'mongoose';
 
 export type ProductDocument = Product & Document;
 
@@ -16,6 +16,8 @@ export class Product {
 
   @Prop({ required: true })
   colors: Array<string>;
+
+  @Prop({ required: true })
   company: string;
 
   @Prop({ required: true })
