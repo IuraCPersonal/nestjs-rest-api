@@ -20,7 +20,7 @@ export class UsersController {
     @InjectConnection()
     private readonly mongoConnection: Connection,
     private userService: UsersService,
-  ) { }
+  ) {}
 
   @Post('/signup')
   async createUser(@Body() createUserDto: CreateUserDto, @Res() res: Response) {

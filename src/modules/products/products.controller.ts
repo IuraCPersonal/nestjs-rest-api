@@ -20,14 +20,14 @@ export class ProductsController {
     @InjectConnection()
     private readonly mongoConnection: Connection,
     private productsService: ProductsService,
-  ) { }
+  ) {}
 
   @Get('/')
   async getProducts() {
     return this.productsService.getProducts();
   }
 
-  @Post('/createProduct')
+  @Post('/')
   async createProduct(
     @Body() createProductDto: CreateProductDto,
     @Res() res: Response,
@@ -52,7 +52,7 @@ export class ProductsController {
     }
   }
 
-  @Get('/getProductById/:id')
+  @Get('/:id')
   async getProductById(
     @Param('id') id: MongooseSchema.Types.ObjectId,
     @Res() res: Response,

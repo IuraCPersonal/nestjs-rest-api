@@ -8,8 +8,17 @@ export class Product {
   @Prop({ required: true })
   name: string;
 
+  @Prop({ required: false })
+  reviews: number;
+
+  @Prop({ required: false })
+  stars: number;
+
   @Prop({ required: true })
   price: number;
+
+  @Prop({ required: true })
+  stock: number;
 
   @Prop({ required: true })
   image: string;

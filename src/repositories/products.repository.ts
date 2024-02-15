@@ -31,7 +31,10 @@ export class ProductsRepository {
   ) {
     let product = new this.productModel({
       name: createProductDto.name,
+      reviews: createProductDto.reviews,
+      start: createProductDto.stars,
       price: createProductDto.price,
+      stock: createProductDto.stock,
       image: createProductDto.image,
       colors: createProductDto.colors,
       company: createProductDto.company,
